@@ -144,6 +144,12 @@ class Experiment(models.Model):
   # The main goal of the experiment
   goal = models.CharField(max_length=256, default = None)
 
+  #What data will be downloaded
+  #data_downloaded = models.CharField(max_length=256, default = None)
+
+  #Where is the data going to be stored
+  #sstore_data = models.CharField(max_length=256, default = None)
+
   def __unicode__(self):
     """
     Produce a string representation of the GeniUser instance.
@@ -160,7 +166,7 @@ class Sensor(models.Model):
   """
 
   # Which experiment requests this sensor?
-  experiment_id = models.ForeignKey(Experiment, db_index=True);
+  experiment_id = models.ForeignKey(Experiment, db_index=True, default=None)
 
   # How frequently is this sensor data pulled/requested?
   frequency = models.IntegerField(default=None, blank=True)
@@ -171,8 +177,8 @@ class Sensor(models.Model):
   # Any level of frequency that we do not support?
   frequency_other = models.CharField(max_length=512, default=None, blank=True)
 
-  # How precise
-  precision = models.IntegerField(default=None, blank=True)
+  # How precise truncation/full
+  precision = models.CharField(max_length=512, default=None, blank=True)
 
   #truncation
   truncation = models.IntegerField(default=None, blank=True)
@@ -211,6 +217,12 @@ class Battery(Sensor):
   # Need technology of battery?
   battery_technology = models.BooleanField(default=False)   
 
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Battery"
+
 
 class Bluetooth(Sensor):
   """
@@ -230,6 +242,12 @@ class Bluetooth(Sensor):
 
   # Need visible device name?
   bluetooth_local_name = models.BooleanField(default=False)
+
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Bluetooth"
 
 
 class Cellular(Sensor):
@@ -266,7 +284,11 @@ class Cellular(Sensor):
   # Need the signal strength?
   cellular_signal_strengths = models.BooleanField(default=False)
 
-
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Cellular"
 
 
 
@@ -286,7 +308,11 @@ class Location(Sensor):
   # Need geocode?
   location_geocode = models.BooleanField(default=False)
 
-
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Location"
 
 
 
@@ -321,7 +347,11 @@ class Settings(Sensor):
   # Need screen timeout?
   settings_screen_tiemout = models.BooleanField(default=False)
 
-
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Settings"
 
 
 
@@ -347,7 +377,11 @@ class ConcretSensor(Sensor):
   # Need most recently received orientation value?
   concretSensor_orientation = models.BooleanField(default=False)
 
-
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Concret Sensor"
 
 
 
@@ -359,7 +393,11 @@ class Signal_strengths(Sensor):
   signal_strength = models.BooleanField(default=False)
 
 
-
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Signal strength"
 
 
 class Wifi(Sensor):
@@ -391,6 +429,11 @@ class Wifi(Sensor):
   # Need scan results?
   Wifi_scan_results = models.BooleanField(default=False)
 
+  def show_name(self):
+    """
+    Produce a string representation of the instance.
+    """
+    return "Wifi"
 
 
 class Node(models.Model):
@@ -691,7 +734,7 @@ class ActionLogVesselDetails(models.Model):
 
   # To know the port despite the fact that this may change for the
   # node record itself.
-  node_port = models.IntegerField("Node port", max_length=100, db_index=True)
+  node_port = models.IntegerField("Node port", db_index=True)
 
   # We store the vessel name rather than a foreign key to the vessels table
   # because vessels can be deleted from the database, whereas nodes can't.

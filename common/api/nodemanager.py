@@ -54,14 +54,14 @@ from repyportability import *
 add_dy_support(locals())
 
 ###### code to enable affixes #########
-affix_stack = dy_import_module('affix_stack.r2py')
+#affix_stack = dy_import_module('affix_stack.r2py')
 
-affix_obj = affix_stack.AffixStack('(CoordinationAffix)(NamingAndResolverAffix)')
+#affix_obj = affix_stack.AffixStack('(CoordinationAffix)(NamingAndResolverAffix)')
 
-openconnection = affix_obj.openconnection
+#openconnection = affix_obj.openconnection
 
 # overwrite the openconnection that is provided to modules we import
-sys.modules['dylink_r2py'].openconnection = openconnection
+#sys.modules['dylink_r2py'].openconnection = openconnection
 
 ####### end code to enable affixes ######
 
@@ -506,7 +506,7 @@ def _do_signed_call(privkeystring, nodeid_ip_port_pubkey_tuple, *callargs):
   try:
     # This can raise an NMClientException, but the handle won't be stored in
     # the nmclient module if it does so we don't have to clean it up.
-    nmhandle = nmclient.nmclient_createhandle(ip, port)
+    nmhandle = nmclient.nmclient_createhandle(str(ip), int(port))
   
     # Be sure to clean up the handle.    
     try:

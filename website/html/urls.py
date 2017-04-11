@@ -29,6 +29,10 @@ urlpatterns = patterns('clearinghouse.website.html.views',
                        (r'^profile$', htmlviews.profile, {}, 'profile'),  # was user_info
                        # show the expriment registration page for this user
                        (r'^registerexperiment$', htmlviews.registerexperiment, {}, 'registerexperiment'),
+                       (r'^viewexperiments$', htmlviews.viewexperiments, {}, 'viewexperiments'),
+                       (r'^viewdonations$', htmlviews.viewdonations, {}, 'viewdonations'),
+                       (r'^delete_experiment/(?P<exp_id>\d+)/$', htmlviews.delete_experiment, {}, 'delete_experiment'),
+                       
                        # OpenID/OAuth auto registered users get sent here after creation
                        # (r'^new_auto_register_user$', 'new_auto_register_user', {}, 'new_auto_register_user'), #currently not used
                        # show the used resources page (with all the currently acquired vessels)
@@ -39,6 +43,8 @@ urlpatterns = patterns('clearinghouse.website.html.views',
                        (r'^getdonations$', htmlviews.getdonations, {},
                         'getdonations'),
 
+                       (r'^installers$', htmlviews.installers, {}, 'installers'),
+                       
                        # 'My GENI' page functions:
                        # get new resources (from form)
                        (r'^get_resources$', htmlviews.get_resources, {},
@@ -62,6 +68,7 @@ urlpatterns = patterns('clearinghouse.website.html.views',
 
                        # Display and allow changing the API key.
                        (r'^api_info$', htmlviews.api_info, {}, 'api_info'),
+
 
                        # Form to generate or upload a new key.
                        (r'^change_key$', htmlviews.change_key, {},
